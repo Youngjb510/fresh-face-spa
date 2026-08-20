@@ -1,5 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 const YOCALE_URL = "https://www.yocale.com/widget/fresh-face-spa";
@@ -25,6 +33,31 @@ const GALLERY_IMG_NAMES = [
 const GALLERY_IMAGES = GALLERY_IMG_NAMES.map((name) =>
   g(`/gallery/${name}.jpg`),
 );
+
+// Every photo on the page, in the order they appear (hero → about → services →
+// gallery → contact). All share ONE lightbox: clicking any photo anywhere opens
+// it large, and prev/next navigate the whole set. Srcs go through `g()` so they
+// resolve correctly on both the live SSR site ("/") and GitHub Pages ("/fresh-face-spa/").
+const ABOUT_IMGS = [
+  g("/gallery/36-P1029071.jpg"),
+  g("/gallery/8-P1029010.jpg"),
+  g("/gallery/43-IMG_5465.jpg"),
+];
+const SERVICES_IMG = g("/gallery/4-P1029005.jpg");
+const CONTACT_IMGS = [
+  g("/gallery/34-P1029066.jpg"),
+  g("/gallery/41-P1029090.jpg"),
+];
+const PG_PHOTOS = [
+  IMAGES.hero, // 0  hero
+  ...ABOUT_IMGS, // 1-3 about
+  SERVICES_IMG, // 4  services
+  ...GALLERY_IMAGES, // 5-8 gallery
+  ...CONTACT_IMGS, // 9-10 contact
+];
+const ABOUT_START = 1;
+const GALLERY_START = 5;
+const CONTACT_START = 9;
 
 const NAV_LINKS = [
   { href: "#about", label: "About" },
@@ -118,25 +151,225 @@ const CONCERNS: {
   },
 ];
 
+/* --------------------------- Shared photo lightbox -------------------------- */
+// One lightbox for EVERY photo on the page (hero, about, services, gallery,
+// contact). Sections register their photos via usePhotosLightbox() and call
+// open(index); the overlay is rendered once here in a portal to document.body.
+// Reuses the same approach as the previous gallery-only lightbox: role="dialog"
+// aria-modal, prev/next arrows, Escape/Arrow keys, Tab focus trap, focus restore
+// to the clicked thumbnail, and body scroll lock.
+
+const PhotosLightboxContext = createContext<{
+  open: (i: number) => void;
+  register: (i: number, el: HTMLButtonElement | null) => void;
+} | null>(null);
+
+function usePhotosLightbox() {
+  const ctx = useContext(PhotosLightboxContext);
+  if (!ctx) throw new Error("usePhotosLightbox must be used within PhotosLightboxProvider");
+  return ctx;
+}
+
+// Wraps any <img> (with its own styling) in a button that opens the shared lightbox.
+function ClickablePhoto({
+  index,
+  label,
+  className,
+  children,
+}: {
+  index: number;
+  label: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  const { open, register } = usePhotosLightbox();
+  return (
+    <button
+      type="button"
+      onClick={() => open(index)}
+      ref={(el) => register(index, el)}
+      aria-label={label}
+      className={className}
+    >
+      {children}
+    </button>
+  );
+}
+
+function PhotosLightboxProvider({
+  photos,
+  children,
+}: {
+  photos: string[];
+  children: ReactNode;
+}) {
+  const [active, setActive] = useState<number | null>(null);
+  const activeRef = useRef<number | null>(null);
+  const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const count = photos.length;
+
+  const restoreFocus = useCallback(() => {
+    const idx = activeRef.current;
+    if (idx !== null) thumbRefs.current[idx]?.focus();
+  }, []);
+
+  const open = useCallback((i: number) => {
+    activeRef.current = i;
+    setActive(i);
+  }, []);
+
+  const close = useCallback(() => {
+    restoreFocus();
+    setActive(null);
+  }, [restoreFocus]);
+
+  const next = useCallback(
+    () => setActive((a) => (a === null ? a : (a + 1) % count)),
+    [count],
+  );
+  const prev = useCallback(
+    () => setActive((a) => (a === null ? a : (a - 1 + count) % count)),
+    [count],
+  );
+
+  const register = useCallback((i: number, el: HTMLButtonElement | null) => {
+    thumbRefs.current[i] = el;
+  }, []);
+
+  useEffect(() => {
+    if (active === null) return;
+    activeRef.current = active;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeBtnRef.current?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        next();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prev();
+      } else if (e.key === "Tab") {
+        const focusables = dialogRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+        );
+        if (!focusables || focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [active, close, next, prev]);
+
+  return (
+    <PhotosLightboxContext.Provider value={{ open, register }}>
+      {children}
+
+      {active !== null &&
+        createPortal(
+          <div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Photo ${active + 1} of ${count}`}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/85 p-4 sm:p-8"
+            onClick={close}
+          >
+            {/* Close button */}
+            <button
+              ref={closeBtnRef}
+              type="button"
+              onClick={close}
+              aria-label="Close photo"
+              className="absolute right-4 top-4 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-ivory/15 text-2xl leading-none text-ivory backdrop-blur transition-colors hover:bg-ivory/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+            >
+              ×
+            </button>
+
+            {/* Prev arrow */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                prev();
+              }}
+              aria-label="Previous photo"
+              className="absolute left-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-ivory/15 text-3xl leading-none text-ivory backdrop-blur transition-colors hover:bg-ivory/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink sm:left-4"
+            >
+              ‹
+            </button>
+
+            {/* Next arrow */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                next();
+              }}
+              aria-label="Next photo"
+              className="absolute right-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-ivory/15 text-3xl leading-none text-ivory backdrop-blur transition-colors hover:bg-ivory/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink sm:right-4"
+            >
+              ›
+            </button>
+
+            {/* Large image — same resolved src as the thumbnail; stopPropagation so
+                a click on the image doesn't close */}
+            <img
+              src={photos[active]}
+              alt={`Photo ${active + 1} of the Fresh Face Spa studio and treatments`}
+              onClick={(e) => e.stopPropagation()}
+              className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl ring-1 ring-line/30"
+            />
+
+            {/* Counter */}
+            <p className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 text-sm tabular-nums text-ivory/85">
+              {active + 1} / {count}
+            </p>
+          </div>,
+          document.body,
+        )}
+    </PhotosLightboxContext.Provider>
+  );
+}
+
 export const Route = createFileRoute("/")({
   component: Home,
 });
 
 function Home() {
   return (
-    <div className="min-h-dvh bg-ivory text-ink">
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Gallery />
-        <Hours />
-        <Contact />
-      </main>
-      <Footer />
-      <ChatWidget />
-    </div>
+    <PhotosLightboxProvider photos={PG_PHOTOS}>
+      <div className="min-h-dvh bg-ivory text-ink">
+        <Header />
+        <main>
+          <Hero />
+          <About />
+          <Services />
+          <Gallery />
+          <Hours />
+          <Contact />
+        </main>
+        <Footer />
+        <ChatWidget />
+      </div>
+    </PhotosLightboxProvider>
   );
 }
 
@@ -213,12 +446,18 @@ function Hero() {
             aria-hidden="true"
             className="absolute -inset-3 rotate-[-2deg] rounded-t-[10rem] rounded-b-[2.5rem] bg-sand"
           />
-          <img
-            src={IMAGES.hero}
-            alt="The calm, softly lit treatment room at Fresh Face Spa"
-            fetchPriority="high"
-            className="relative aspect-[4/5] w-full rounded-t-[10rem] rounded-b-[2.5rem] object-cover shadow-xl"
-          />
+          <ClickablePhoto
+            index={0}
+            label={`Open photo 1 of ${PG_PHOTOS.length} full size`}
+            className="relative block w-full cursor-pointer rounded-t-[10rem] rounded-b-[2.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2"
+          >
+            <img
+              src={IMAGES.hero}
+              alt="The calm, softly lit treatment room at Fresh Face Spa"
+              fetchPriority="high"
+              className="relative aspect-[4/5] w-full rounded-t-[10rem] rounded-b-[2.5rem] object-cover shadow-xl"
+            />
+          </ClickablePhoto>
           <p className="absolute -bottom-4 left-1/2 w-max -translate-x-1/2 rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-sage-deep shadow-sm ring-1 ring-line">
             Est. Mission Valley, San Diego
           </p>
@@ -305,29 +544,45 @@ function About() {
           </div>
         </div>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <img
-            src={g("/gallery/36-P1029071.jpg")}
-            alt="Fresh Face Spa studio detail"
-            loading="lazy"
-            decoding="async"
-            className="aspect-[4/5] h-full w-full rounded-2xl object-cover"
-          />
-          <img
-            src={g("/gallery/8-P1029010.jpg")}
-            alt="Fresh Face Spa treatment room detail"
-            loading="lazy"
-            decoding="async"
-            className="aspect-[4/5] h-full w-full rounded-2xl object-cover"
-          />
-          <figure className="overflow-hidden rounded-2xl">
+          <ClickablePhoto
+            index={ABOUT_START + 0}
+            label={`Open photo ${ABOUT_START + 0 + 1} of ${PG_PHOTOS.length} full size`}
+            className="block w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2 rounded-2xl"
+          >
             <img
-              src={g("/gallery/43-IMG_5465.jpg")}
+              src={ABOUT_IMGS[0]}
+              alt="Fresh Face Spa studio detail"
+              loading="lazy"
+              decoding="async"
+              className="aspect-[4/5] h-full w-full rounded-2xl object-cover"
+            />
+          </ClickablePhoto>
+          <ClickablePhoto
+            index={ABOUT_START + 1}
+            label={`Open photo ${ABOUT_START + 1 + 1} of ${PG_PHOTOS.length} full size`}
+            className="block w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2 rounded-2xl"
+          >
+            <img
+              src={ABOUT_IMGS[1]}
+              alt="Fresh Face Spa treatment room detail"
+              loading="lazy"
+              decoding="async"
+              className="aspect-[4/5] h-full w-full rounded-2xl object-cover"
+            />
+          </ClickablePhoto>
+          <ClickablePhoto
+            index={ABOUT_START + 2}
+            label={`Open photo ${ABOUT_START + 2 + 1} of ${PG_PHOTOS.length} full size`}
+            className="block w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2 overflow-hidden rounded-2xl"
+          >
+            <img
+              src={ABOUT_IMGS[2]}
               alt="Fresh Face Spa studio detail"
               loading="lazy"
               decoding="async"
               className="block aspect-[4/5] h-full w-[102%] -translate-x-[2%] object-cover"
             />
-          </figure>
+          </ClickablePhoto>
         </div>
       </div>
     </section>
@@ -352,13 +607,19 @@ function Services() {
           </p>
         </div>
         <figure className="mt-10 overflow-hidden rounded-3xl bg-sand">
-          <img
-            src={g("/gallery/4-P1029005.jpg")}
-            alt="Fresh Face Spa treatment space prepared for a facial"
-            loading="lazy"
-            decoding="async"
-            className="h-auto w-full object-contain"
-          />
+          <ClickablePhoto
+            index={4}
+            label={`Open photo 5 of ${PG_PHOTOS.length} full size`}
+            className="block w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2"
+          >
+            <img
+              src={SERVICES_IMG}
+              alt="Fresh Face Spa treatment space prepared for a facial"
+              loading="lazy"
+              decoding="async"
+              className="h-auto w-full object-contain"
+            />
+          </ClickablePhoto>
         </figure>
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s) => (
@@ -424,71 +685,7 @@ function Services() {
 /* ---------------------------------- Gallery -------------------------------- */
 
 function Gallery() {
-  const [active, setActive] = useState<number | null>(null);
-  const activeRef = useRef<number | null>(null);
-  const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
-  const dialogRef = useRef<HTMLDivElement | null>(null);
-  const count = GALLERY_IMAGES.length;
-
-  const restoreFocus = useCallback(() => {
-    const idx = activeRef.current;
-    if (idx !== null) thumbRefs.current[idx]?.focus();
-  }, []);
-
-  const open = useCallback((i: number) => setActive(i), []);
-  const close = useCallback(() => {
-    restoreFocus();
-    setActive(null);
-  }, [restoreFocus]);
-  const next = useCallback(
-    () => setActive((a) => (a === null ? a : (a + 1) % count)),
-    [count],
-  );
-  const prev = useCallback(
-    () => setActive((a) => (a === null ? a : (a - 1 + count) % count)),
-    [count],
-  );
-
-  useEffect(() => {
-    if (active === null) return;
-    activeRef.current = active;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    closeBtnRef.current?.focus();
-
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        close();
-      } else if (e.key === "ArrowRight") {
-        e.preventDefault();
-        next();
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        prev();
-      } else if (e.key === "Tab") {
-        const focusables = dialogRef.current?.querySelectorAll<HTMLElement>(
-          'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
-        );
-        if (!focusables || focusables.length === 0) return;
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [active, close, next, prev]);
+  const { open, register } = usePhotosLightbox();
 
   return (
     <section id="gallery" aria-label="Studio gallery" className="bg-linen/60 py-20 lg:py-28">
@@ -510,16 +707,14 @@ function Gallery() {
             <button
               key={src}
               type="button"
-              ref={(el) => {
-                thumbRefs.current[i] = el;
-              }}
-              onClick={() => open(i)}
-              aria-label={`Open photo ${i + 1} of ${count} full size`}
+              ref={(el) => register(GALLERY_START + i, el)}
+              onClick={() => open(GALLERY_START + i)}
+              aria-label={`Open photo ${GALLERY_START + i + 1} of ${PG_PHOTOS.length} full size`}
               className="mb-5 block w-full cursor-pointer break-inside-avoid overflow-hidden rounded-3xl bg-linen text-left ring-1 ring-line/60 transition-shadow duration-300 hover:ring-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2 focus-visible:ring-offset-linen"
             >
               <img
                 src={src}
-                alt={`Photo ${i + 1} of the Fresh Face Spa studio and treatments`}
+                alt={`Photo ${GALLERY_START + i + 1} of the Fresh Face Spa studio and treatments`}
                 loading="lazy"
                 decoding="async"
                 className={`block h-auto transition-transform duration-500 hover:scale-[1.03] ${
@@ -532,69 +727,6 @@ function Gallery() {
           ))}
         </div>
       </div>
-
-      {active !== null &&
-        createPortal(
-          <div
-            ref={dialogRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label={`Gallery photo ${active + 1} of ${count}`}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/85 p-4 sm:p-8"
-            onClick={close}
-          >
-            {/* Close button */}
-            <button
-              ref={closeBtnRef}
-              type="button"
-              onClick={close}
-              aria-label="Close photo"
-              className="absolute right-4 top-4 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-ivory/15 text-2xl leading-none text-ivory backdrop-blur transition-colors hover:bg-ivory/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
-            >
-              ×
-            </button>
-
-            {/* Prev arrow */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                prev();
-              }}
-              aria-label="Previous photo"
-              className="absolute left-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-ivory/15 text-3xl leading-none text-ivory backdrop-blur transition-colors hover:bg-ivory/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink sm:left-4"
-            >
-              ‹
-            </button>
-
-            {/* Next arrow */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                next();
-              }}
-              aria-label="Next photo"
-              className="absolute right-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-ivory/15 text-3xl leading-none text-ivory backdrop-blur transition-colors hover:bg-ivory/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink sm:right-4"
-            >
-              ›
-            </button>
-
-            {/* Large image — same resolved src, stopPropagation so backdrop click doesn't close */}
-            <img
-              src={GALLERY_IMAGES[active]}
-              alt={`Photo ${active + 1} of the Fresh Face Spa studio and treatments`}
-              onClick={(e) => e.stopPropagation()}
-              className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl ring-1 ring-line/30"
-            />
-
-            {/* Counter */}
-            <p className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 text-sm tabular-nums text-ivory/85">
-              {active + 1} / {count}
-            </p>
-          </div>,
-          document.body,
-        )}
     </section>
   );
 }
@@ -795,20 +927,32 @@ function Contact() {
               </p>
             </div>
             <div className="mt-6 grid grid-cols-2 gap-3">
-              <img
-                src={g("/gallery/34-P1029066.jpg")}
-                alt="Fresh Face Spa studio detail"
-                loading="lazy"
-                decoding="async"
-                className="h-auto w-full rounded-2xl object-contain"
-              />
-              <img
-                src={g("/gallery/41-P1029090.jpg")}
-                alt="Fresh Face Spa studio detail"
-                loading="lazy"
-                decoding="async"
-                className="h-auto w-full rounded-2xl object-contain"
-              />
+              <ClickablePhoto
+                index={CONTACT_START + 0}
+                label={`Open photo ${CONTACT_START + 0 + 1} of ${PG_PHOTOS.length} full size`}
+                className="block w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand focus-visible:ring-offset-2 focus-visible:ring-offset-sage-deep rounded-2xl"
+              >
+                <img
+                  src={CONTACT_IMGS[0]}
+                  alt="Fresh Face Spa studio detail"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-auto w-full rounded-2xl object-contain"
+                />
+              </ClickablePhoto>
+              <ClickablePhoto
+                index={CONTACT_START + 1}
+                label={`Open photo ${CONTACT_START + 1 + 1} of ${PG_PHOTOS.length} full size`}
+                className="block w-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand focus-visible:ring-offset-2 focus-visible:ring-offset-sage-deep rounded-2xl"
+              >
+                <img
+                  src={CONTACT_IMGS[1]}
+                  alt="Fresh Face Spa studio detail"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-auto w-full rounded-2xl object-contain"
+                />
+              </ClickablePhoto>
             </div>
           </div>
         </div>
