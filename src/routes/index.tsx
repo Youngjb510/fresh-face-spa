@@ -580,7 +580,7 @@ function About() {
               alt="Fresh Face Spa studio detail"
               loading="lazy"
               decoding="async"
-              className="block aspect-[4/5] h-full w-[102%] -translate-x-[2%] object-cover"
+              className="block aspect-[4/5] h-full w-full object-cover"
             />
           </ClickablePhoto>
         </div>
@@ -717,11 +717,7 @@ function Gallery() {
                 alt={`Photo ${GALLERY_START + i + 1} of the Fresh Face Spa studio and treatments`}
                 loading="lazy"
                 decoding="async"
-                className={`block h-auto transition-transform duration-500 hover:scale-[1.03] ${
-                  src.endsWith("43-IMG_5465.jpg")
-                    ? "w-[102%] -translate-x-[2%]"
-                    : "w-full"
-                }`}
+                className="block h-auto w-full transition-transform duration-500 hover:scale-[1.03]"
               />
             </button>
           ))}
