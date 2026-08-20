@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua",
+    "Times New Roman", serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --color-ivory: #fbf8f3;
+  --color-linen: #f6f0e7;
+  --color-sand: #efe6d8;
+  --color-ink: #322d27;
+  --color-mute: #6f675c;
+  --color-faint: #9a8f80;
+  --color-line: #e5dccd;
+  --color-sage: #6f7d6e;
+  --color-sage-deep: #55625a;
+  --color-sage-soft: #e4e9e2;
+  --color-clay: #c39a7d;
+  --color-clay-deep: #a97f61;
+  --color-gold: #8a6a2f;
+  --color-gold-display: #a17c3a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ivory font-sans text-ink antialiased;
+  }
+
+  section[id] {
+    scroll-margin-top: 4.75rem;
+  }
+
+  ::selection {
+    background-color: var(--color-sage-soft);
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-gold;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors duration-200 hover:bg-gold-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ivory;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/25 bg-transparent px-7 py-3.5 text-sm font-semibold tracking-wide text-ink transition-colors duration-200 hover:border-sage-deep hover:text-sage-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2 focus-visible:ring-offset-ivory;
+  }
+
+  .nav-link {
+    @apply rounded-md text-sm font-medium text-mute transition-colors hover:text-sage-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2 focus-visible:ring-offset-ivory;
+  }
+
+  .card {
+    @apply rounded-3xl border border-line bg-white/70 p-7 sm:p-8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
