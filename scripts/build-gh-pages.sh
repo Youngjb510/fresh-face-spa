@@ -23,7 +23,11 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 VITE_BASE="/" bun run build
-node scripts/prerender.mjs
+# prerender.mjs defaults to requesting /fresh-face-spa/ from the built SSR
+# server — the other half of the same stale base path. With VITE_BASE="/" the
+# server only serves "/", so the old default 307-redirects instead of
+# rendering and the build fails before it reaches the missing-image checks.
+PRERENDER_URL="http://localhost/" node scripts/prerender.mjs
 echo "[build-gh-pages] static site ready in dist/client/"
 
 # Sanity checks: every referenced gallery image must exist in the output.
