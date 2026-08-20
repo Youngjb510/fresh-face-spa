@@ -3,8 +3,14 @@ import { useEffect, useRef, useState } from "react";
 
 const YOCALE_URL = "https://www.yocale.com/widget/fresh-face-spa";
 
+// Base path for asset URLs. Vite's `base` (import.meta.env.BASE_URL) is "/" for
+// the SSR/live site, and "/fresh-face-spa/" for the GitHub Pages static build.
+// All gallery image references MUST go through `g()` so they resolve correctly
+// when the site is served from a subpath (e.g. https://<user>.github.io/fresh-face-spa/).
+const g = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+
 const IMAGES = {
-  hero: "/gallery/9-P1029012.jpg",
+  hero: g("/gallery/9-P1029012.jpg"),
 };
 
 // Locally-hosted, optimized studio photos (copied from the uploaded JPGs into
@@ -15,8 +21,8 @@ const GALLERY_IMG_NAMES = [
   "21-P1029043",
   "27-P1029053",
 ];
-const GALLERY_IMAGES = GALLERY_IMG_NAMES.map(
-  (name) => `/gallery/${name}.jpg`,
+const GALLERY_IMAGES = GALLERY_IMG_NAMES.map((name) =>
+  g(`/gallery/${name}.jpg`),
 );
 
 const NAV_LINKS = [
@@ -299,14 +305,14 @@ function About() {
         </div>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
           <img
-            src="/gallery/36-P1029071.jpg"
+            src={g("/gallery/36-P1029071.jpg")}
             alt="Fresh Face Spa studio detail"
             loading="lazy"
             decoding="async"
             className="aspect-[4/5] h-full w-full rounded-2xl object-cover"
           />
           <img
-            src="/gallery/8-P1029010.jpg"
+            src={g("/gallery/8-P1029010.jpg")}
             alt="Fresh Face Spa treatment room detail"
             loading="lazy"
             decoding="async"
@@ -314,7 +320,7 @@ function About() {
           />
           <figure className="overflow-hidden rounded-2xl">
             <img
-              src="/gallery/43-IMG_5465.jpg"
+              src={g("/gallery/43-IMG_5465.jpg")}
               alt="Fresh Face Spa studio detail"
               loading="lazy"
               decoding="async"
@@ -346,7 +352,7 @@ function Services() {
         </div>
         <figure className="mt-10 overflow-hidden rounded-3xl bg-sand">
           <img
-            src="/gallery/4-P1029005.jpg"
+            src={g("/gallery/4-P1029005.jpg")}
             alt="Fresh Face Spa treatment space prepared for a facial"
             loading="lazy"
             decoding="async"
@@ -654,14 +660,14 @@ function Contact() {
             </div>
             <div className="mt-6 grid grid-cols-2 gap-3">
               <img
-                src="/gallery/34-P1029066.jpg"
+                src={g("/gallery/34-P1029066.jpg")}
                 alt="Fresh Face Spa studio detail"
                 loading="lazy"
                 decoding="async"
                 className="h-auto w-full rounded-2xl object-contain"
               />
               <img
-                src="/gallery/41-P1029090.jpg"
+                src={g("/gallery/41-P1029090.jpg")}
                 alt="Fresh Face Spa studio detail"
                 loading="lazy"
                 decoding="async"

@@ -4,7 +4,13 @@ import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
+// Base path for all emitted asset URLs. Defaults to "/" (SSR/live site on port
+// 3000). Set VITE_BASE (e.g. "/fresh-face-spa/") when producing the static
+// GitHub Pages build so images/JS/CSS resolve under the project subpath.
+const base = process.env.VITE_BASE && process.env.VITE_BASE !== "" ? process.env.VITE_BASE : "/";
+
 export default defineConfig({
+  base,
   server: {
     port: 3000,
     host: true,

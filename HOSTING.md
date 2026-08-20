@@ -1,5 +1,10 @@
 # Fresh Face Spa — Self-hosting guide
 
+> **Running for free on GitHub Pages?** See **GITHUB_PAGES.md** — the site is
+> pre-rendered to a static bundle and deployed to the `gh-pages` branch by a
+> GitHub Actions workflow. The rest of this file covers hosting the SSR app
+> yourself (Vercel, Netlify, your own Node/Bun server).
+
 This is the full source for the Fresh Face Spa website. It is a **TanStack Start
 (React + Vite) app** — not a single static HTML file — so it must be built before
 serving. The following explains how to run it on your own infrastructure
