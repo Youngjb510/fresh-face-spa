@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Build static site (base path /fresh-face-spa/)
+      - name: Build static site (base path /)
         # Produces the deployable static bundle in dist/client:
         # pre-rendered index.html + hashed JS/CSS + all gallery images.
         run: bash ./scripts/build-gh-pages.sh
