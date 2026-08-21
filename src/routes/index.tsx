@@ -702,7 +702,27 @@ function Gallery() {
             work.
           </p>
         </div>
-        <div className="mt-12 columns-2 gap-5 sm:columns-3 lg:columns-4 [column-fill:balance]">
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:hidden">
+          {GALLERY_IMAGES.slice(0, 4).map((src, i) => (
+            <button
+              key={src}
+              type="button"
+              ref={(el) => register(GALLERY_START + i, el)}
+              onClick={() => open(GALLERY_START + i)}
+              aria-label={`Open photo ${GALLERY_START + i + 1} of ${PG_PHOTOS.length} full size`}
+              className="block aspect-square cursor-pointer overflow-hidden rounded-3xl bg-linen text-left ring-1 ring-line/60 transition-shadow duration-300 hover:ring-sage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2 focus-visible:ring-offset-linen"
+            >
+              <img
+                src={src}
+                alt={`Photo ${GALLERY_START + i + 1} of the Fresh Face Spa studio and treatments`}
+                loading="lazy"
+                decoding="async"
+                className="block h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+              />
+            </button>
+          ))}
+        </div>
+        <div className="mt-12 hidden gap-5 sm:columns-3 lg:columns-4 sm:[column-fill:balance] sm:block">
           {GALLERY_IMAGES.map((src, i) => (
             <button
               key={src}
