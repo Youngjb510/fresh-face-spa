@@ -580,7 +580,7 @@ function About() {
               alt="Fresh Face Spa studio detail"
               loading="lazy"
               decoding="async"
-              className="block aspect-[4/5] h-full w-full object-cover"
+              className="block aspect-[4/5] h-full w-full object-contain"
             />
           </ClickablePhoto>
         </div>
