@@ -818,11 +818,16 @@ function Contact() {
                   <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
-                <span>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=1640+Camino+Del+Rio+N+Ste+206+San+Diego+CA+92108"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline-offset-4 transition-colors hover:text-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand focus-visible:ring-offset-2 focus-visible:ring-offset-sage-deep rounded"
+                >
                   1640 Camino Del Rio N, Ste 206, Rm 116
                   <br />
                   San Diego, CA 92108
-                </span>
+                </a>
               </p>
               <p className="flex items-start gap-3">
                 <svg
@@ -880,11 +885,16 @@ function Contact() {
                     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
-                  <span>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=940+Eastlake+Parkway+Suite+16+Chula+Vista+CA+91914"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline-offset-4 transition-colors hover:text-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand focus-visible:ring-offset-2 focus-visible:ring-offset-sage-deep rounded"
+                  >
                     940 Eastlake Parkway, Suite 16
                     <br />
                     Chula Vista, CA 91914
-                  </span>
+                  </a>
                 </p>
                 <p className="mt-3 flex items-start gap-3">
                   <svg
