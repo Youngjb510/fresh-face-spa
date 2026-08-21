@@ -87,7 +87,7 @@ const SERVICES = [
   {
     name: "Back Facial",
     copy: "Deeply clean and de-stress the back and décolleté — a favorite for congestion, breakouts, and tension.",
-    tag: "$80 · 60 min",
+    tag: null,
   },
   {
     name: "Exfoliation & Renewal",
