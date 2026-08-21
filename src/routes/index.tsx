@@ -891,6 +891,8 @@ function Contact() {
                     rel="noopener noreferrer"
                     className="underline-offset-4 transition-colors hover:text-sand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand focus-visible:ring-offset-2 focus-visible:ring-offset-sage-deep rounded"
                   >
+                    Sola Salon Studios
+                    <br />
                     940 Eastlake Parkway, Suite 16
                     <br />
                     Chula Vista, CA 91914
@@ -944,6 +946,28 @@ function Contact() {
                 >
                   <InstagramIcon />
                   Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.facebook.com/FreshFaceSpa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-ivory ring-1 ring-ivory/20 transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand focus-visible:ring-offset-2 focus-visible:ring-offset-sage-deep"
+                >
+                  <FacebookIcon />
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.tiktok.com/@freshfacespasd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-ivory ring-1 ring-ivory/20 transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand focus-visible:ring-offset-2 focus-visible:ring-offset-sage-deep"
+                >
+                  <TikTokIcon />
+                  TikTok
                 </a>
               </li>
             </ul>
@@ -1193,6 +1217,22 @@ function ChatWidget() {
 }
 
 /* ---------------------------------- Icons ---------------------------------- */
+
+function FacebookIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+      <path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.878h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z" />
+    </svg>
+  );
+}
+
+function TikTokIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+      <path d="M16.6 5.82c-1.0-.973-1.549-2.278-1.549-3.82h-3.117v13.34c0 1.548-1.257 2.805-2.805 2.805s-2.805-1.257-2.805-2.805 1.257-2.805 2.805-2.805c.31 0 .607.05.887.144V9.474a5.94 5.94 0 0 0-.887-.066C5.735 9.408 3 12.143 3 15.538S5.735 21.667 9.13 21.667s6.13-2.735 6.13-6.13V8.507a8.94 8.94 0 0 0 5.226 1.678v-3.34a5.31 5.31 0 0 1-3.886-1.024z" />
+    </svg>
+  );
+}
 
 function InstagramIcon() {
   return (
