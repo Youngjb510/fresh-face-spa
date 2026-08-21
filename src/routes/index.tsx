@@ -950,7 +950,7 @@ function Contact() {
               </li>
               <li>
                 <a
-                  href="https://www.facebook.com/FreshFaceSpa"
+                  href="https://www.facebook.com/profile.php?id=61587966540511"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-ivory ring-1 ring-ivory/20 transition-colors hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sand focus-visible:ring-offset-2 focus-visible:ring-offset-sage-deep"
