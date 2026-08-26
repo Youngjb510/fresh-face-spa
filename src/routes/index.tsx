@@ -361,6 +361,7 @@ function Home() {
         <main>
           <Hero />
           <About />
+          <VideoIntro />
           <Services />
           <Gallery />
           <Hours />
@@ -590,6 +591,36 @@ function About() {
 }
 
 /* --------------------------------- Services -------------------------------- */
+
+function VideoIntro() {
+  return (
+    <section id="watch" className="bg-ivory py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="mx-auto max-w-sm text-center">
+          <p className="eyebrow">Take a look inside</p>
+          <h2 className="mt-4 font-display text-4xl font-medium leading-tight tracking-tight text-gold-display sm:text-5xl">
+            See the <span className="italic text-gold-display">studio</span>
+          </h2>
+          <p className="mt-5 leading-relaxed text-mute">
+            A quick look at the space, the care, and what a visit with Raquel feels like.
+          </p>
+          <div className="mt-10 overflow-hidden rounded-3xl border border-line bg-linen shadow-sm">
+            <video
+              className="block aspect-9/16 w-full object-cover"
+              src={g("/video/promo.mp4")}
+              poster={g("/video/promo-poster.jpg")}
+              controls
+              playsInline
+              preload="metadata"
+            >
+              Your browser doesn't support embedded video.
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function Services() {
   return (
