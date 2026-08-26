@@ -73,31 +73,126 @@ const FOCUS_AREAS = [
   { title: "Age management", copy: "Firming actives and massage for a rested, lifted look." },
 ];
 
-const SERVICES = [
+type MenuService = {
+  name: string;
+  price: string;
+  duration: string | null;
+  copy: string;
+  idealFor: string | null;
+  included: string[];
+  addOns: string[];
+  tag?: string;
+};
+
+const SERVICES: MenuService[] = [
   {
-    name: "Signature Facials",
-    copy: "Bespoke facials tailored to your skin on the day — deep hydration, calming botanicals, and a glow you can feel.",
-    tag: "Most loved",
+    name: "Dermaplaning Facial with Peel",
+    price: "$200",
+    duration: "70 min",
+    copy: "Reveal your smoothest, most radiant complexion with this high performance dual treatment. Instant radiance. Leaves skin noticeably brighter, silky smooth and glowing after a single session. Deeper product penetration removes the barrier layer so serums and active ingredients work more effectively.",
+    idealFor: "Dry, dull, uneven skin tone, sun damage and large pores.",
+    included: ["Double Cleanse", "Enzyme", "Dermaplaning", "Peel", "Facial massage (hand & shoulder)", "Serum infusion", "LED light"],
+    addOns: [],
   },
   {
-    name: "Advanced Skin Treatments",
-    copy: "Corrective, results-focused care for acne, pigmentation, and reactive skin — clinical-strength actives paired with gentle technique.",
-    tag: null,
+    name: "Customized Facial",
+    price: "$125",
+    duration: "60 min",
+    copy: "Tailored specifically to your skin's unique needs. This fully personalized treatment delivers maximum results by addressing your specific concern.",
+    idealFor: "All skin types, including sensitive, congested, dry or aging skin.",
+    included: ["Double Cleanse", "Exfoliation (enzyme mask)", "Extraction/steam", "Mask (depends on your skin type)", "Facial massage (hand & shoulder)", "LED light", "Serum, moisturizer, SPF"],
+    addOns: ["Dermaplaning — $25", "Microdermabrasion — $30"],
+  },
+  {
+    name: "Chemical Peel with Facial",
+    price: "$175",
+    duration: "70 min",
+    copy: "Combine the ultimate relaxation with clinical grade resurfacing. This targeted treatment pairs the restorative steps of a classic facial — deep cleansing, gentle extraction — with an advanced chemical peel tailored to your specific skin goals.",
+    idealFor: "Anti-aging, sun damaged, hyperpigmentation or breakout prone skin.",
+    included: ["Double cleanse", "Light exfoliation", "Extraction (if needed)", "Facial massage (hand & shoulder)", "Chemical peel Jessner by Circadia"],
+    addOns: [],
+  },
+  {
+    name: "No Peel, Peel — Bio Skin",
+    price: "$225",
+    duration: null,
+    copy: "Experience maximum skin transformation with zero downtime. Bio RePeel CI3 Blue is an innovative 35% TCA biphasic chemical peel that bypasses the epidermis to work directly within deeper layers of the skin (Bio Skin Bio Repeel CI3).",
+    idealFor: "Blocked pores, acne, hyperpigmentation, melasma, fine lines and wrinkles.",
+    included: ["Double cleanse", "Exfoliation", "LED light", "Facial massage (hand & shoulder)", "Face mask", "Serum"],
+    addOns: ["Dermaplaning — $25"],
+  },
+  {
+    name: "Liquid Microneedling (needle-less)",
+    price: "$175",
+    duration: "70 min",
+    copy: "Our Bio micro needling — 10 million spicules — ensures optimal stimulation for collagen production and skin rejuvenation. It offers a manual treatment that replaces traditional microneedling and chemical peels.",
+    idealFor: "Hyperpigmentation, dull skin, uneven skin tone, acne scars and texture.",
+    included: ["Double cleanse", "Exfoliation", "Light extraction (if needed) / steam", "Facial massage (hand & shoulder)", "Mask", "Serum, SPF"],
+    addOns: [],
+  },
+  {
+    name: "Microdermabrasion",
+    price: "$135",
+    duration: "60 min",
+    copy: "Refresh and polish your skin with this advanced physical exfoliation treatment. It sweeps away dull, dead skin cells and clears clogged pores to instantly reveal a softer, brighter and more refined skin surface.",
+    idealFor: null,
+    included: ["Double cleanse", "Exfoliation", "Light extraction/steam", "Mask", "Facial massage (hand & shoulder)", "LED light", "Serum, moisturizer, SPF"],
+    addOns: [],
+  },
+  {
+    name: "Hydra Glow Facial",
+    price: "$175",
+    duration: "70 min",
+    copy: "Experience the ultimate deep cleanse and instant glow with our advanced hydro-dermabrasion treatment. This treatment can even skin tone, help treat acne, and reduce the appearance of enlarged pores and fine lines.",
+    idealFor: null,
+    included: ["Double cleanse", "Exfoliation (enzyme mask)", "Extraction/steam", "RF skin tightening", "Facial massage (hand & shoulder)", "Mask", "LED light", "Serum, moisturizer, SPF"],
+    addOns: ["Dermaplaning — $25"],
+  },
+  {
+    name: "Firming Peptide Facial",
+    price: "$135",
+    duration: "70 min",
+    copy: "Renew, rebuild and lift aging or sluggish skin with this advanced anti-aging treatment. Instant firming & tightening delivers an immediate lifting effect, smoothing fine lines and softening deep wrinkles.",
+    idealFor: null,
+    included: ["Double cleanse", "Exfoliation", "Facial massage (hand & shoulder)", "Mask (firming peptide)", "LED light", "Serum, moisturizer, SPF"],
+    addOns: ["Dermaplaning — $20"],
+  },
+  {
+    name: "Acne Facial (Face Reality)",
+    price: "$125",
+    duration: "90 min",
+    copy: "A target driven, clinical treatment designed specifically for acne-prone skin. This facial features deep cleanse, mild exfoliating peel and extraction to clear congested pores.",
+    idealFor: null,
+    included: ["Double Cleanse", "Exfoliation (enzyme mask)", "Extractions/steam", "High frequency", "Mask", "LED Blue light", "Serum, moisturizer, SPF"],
+    addOns: [],
+  },
+  {
+    name: "Teen Clarifying Facial",
+    price: "$90",
+    duration: null,
+    copy: "Designed specifically for adolescent skin, this gentle yet effective facial addresses the unique skin changes caused by hormonal shifts, excess oil production and early breakouts.",
+    idealFor: null,
+    included: ["Double Cleanse", "Exfoliation", "Light extraction (if needed) / steam", "Mask", "Serum, moisturizer, SPF"],
+    addOns: [],
   },
   {
     name: "Back Facial",
-    copy: "Deeply clean and de-stress the back and décolleté — a favorite for congestion, breakouts, and tension.",
-    tag: null,
+    price: "$80",
+    duration: "60 min",
+    copy: "Treat a hard-to-reach area to the same deep-cleansing and skin-refining care as a classic facial.",
+    idealFor: null,
+    included: ["Double cleanse", "Exfoliation", "Extraction (if needed)", "Back massage", "Mask"],
+    addOns: ["Microdermabrasion — $25"],
   },
   {
-    name: "Exfoliation & Renewal",
-    copy: "Targeted chemical and physical exfoliation that resurfaces, brightens, and preps skin to absorb more.",
-    tag: null,
-  },
-  {
-    name: "New Client Specials",
-    copy: "A consultation-led first visit: personalized facial, honest skin assessment, and a plan you'll actually follow.",
-    tag: null,
+    name: "First Client Special",
+    price: "$99",
+    duration: null,
+    copy: "Your first visit with us — a consultation-led facial that gets your esthetician up to speed on your skin, goals, and history.",
+    idealFor: "First visit only.",
+    included: ["Consultation", "Double cleanse", "Exfoliation", "Mask", "Facial massage (hand & shoulder)", "LED light", "Serum, moisturizer, SPF"],
+    addOns: ["Dermaplaning — $25"],
+    tag: "First visit",
   },
 ];
 
@@ -122,31 +217,31 @@ const CONCERNS: {
   {
     id: "acne",
     label: "Acne & breakouts",
-    service: "Advanced Skin Treatments",
+    service: "Acne Facial (Face Reality)",
     copy: "Deep-clearing, congestion-focused work that calms active breakouts and gently exfoliates pores — finished with a soothing step so skin never feels stripped. Your esthetician tailors every pass to your skin's tolerance.",
   },
   {
     id: "pigmentation",
     label: "Pigmentation & dark spots",
-    service: "Exfoliation & Renewal",
+    service: "Liquid Microneedling (needle-less)",
     copy: "Brightening exfoliation and renewal treatments that lift dullness and help fade sun spots and post-acne marks. A short series of visits usually shows the clearest progress.",
   },
   {
     id: "sensitivity",
     label: "Sensitive / reactive skin",
-    service: "Signature Facials",
+    service: "Customized Facial",
     copy: "A calm, hydrating facial built around gentle, fragrance-free products that soothe reactive skin and help rebuild its barrier — no harsh scrubs, no surprises.",
   },
   {
     id: "aging",
     label: "Aging & fine lines",
-    service: "Signature Facials",
+    service: "Firming Peptide Facial",
     copy: "Age-management facials pair firming actives and lymphatic technique with our signature fascia facial massage to support elasticity, tone, and a rested, lifted look.",
   },
   {
     id: "first",
     label: "First-time client",
-    service: "New Client Specials",
+    service: "First Client Special",
     copy: "Book a New Client Special: we start with a consultation and a fully customized facial, then build a plan around your skin's goals — with take-home guidance after every visit.",
   },
 ];
@@ -633,6 +728,106 @@ function About() {
 
 /* --------------------------------- Services -------------------------------- */
 
+function ServiceRow({ s }: { s: MenuService }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="card !p-0 overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded-3xl"
+      >
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <h3 className="font-display text-xl font-medium text-gold sm:text-2xl">
+              {s.name}
+            </h3>
+            {s.tag ? (
+              <span className="shrink-0 rounded-full bg-sage-soft px-3 py-1 text-xs font-semibold text-gold">
+                {s.tag}
+              </span>
+            ) : null}
+          </div>
+          <p className="mt-1 text-sm text-mute">
+            {s.price}
+            {s.duration ? ` · ${s.duration}` : ""}
+          </p>
+        </div>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 20 20"
+          className={`h-5 w-5 shrink-0 text-gold transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="m5 7.5 5 5 5-5" />
+        </svg>
+      </button>
+      {open ? (
+        <div className="px-6 pb-6 pt-0">
+          <p className="text-sm leading-relaxed text-mute">{s.copy}</p>
+          {s.idealFor ? (
+            <p className="mt-3 text-sm leading-relaxed text-mute">
+              <span className="font-semibold text-ink">Ideal for:</span> {s.idealFor}
+            </p>
+          ) : null}
+          <div className="mt-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
+              Included in your treatment
+            </p>
+            <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
+              {s.included.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-sm text-mute">
+                  <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-sage" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {s.addOns.length > 0 ? (
+            <div className="mt-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
+                Add-ons
+              </p>
+              <ul className="mt-2 space-y-1">
+                {s.addOns.map((item) => (
+                  <li key={item} className="text-sm text-mute">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          <a
+            href={YOCALE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition-colors hover:text-gold-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded"
+          >
+            Book this treatment
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 20 20"
+              className="h-3.5 w-3.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M7 7h10v10M7 17 17 7" />
+            </svg>
+          </a>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function Services() {
   return (
     <section id="services" className="bg-ivory py-20 lg:py-28">
@@ -643,9 +838,8 @@ function Services() {
             Treatments for every <span className="italic text-gold-display">concern</span>
           </h2>
           <p className="mt-5 leading-relaxed text-mute">
-            Every treatment starts with a conversation about your skin. Prices
-            and times vary by visit — the Back Facial is a studio favorite at
-            $80 for 60 minutes.
+            Every treatment starts with a conversation about your skin. Tap a
+            treatment to see what's included.
           </p>
         </div>
         <figure className="mt-10 overflow-hidden rounded-3xl bg-sand">
@@ -663,61 +857,24 @@ function Services() {
             />
           </ClickablePhoto>
         </figure>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 space-y-4">
           {SERVICES.map((s) => (
-            <article
-              key={s.name}
-              className="card flex flex-col transition-shadow duration-200 hover:shadow-lg"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="font-display text-2xl font-medium text-gold">
-                  {s.name}
-                </h3>
-                {s.tag ? (
-                  <span className="shrink-0 rounded-full bg-sage-soft px-3 py-1 text-xs font-semibold text-gold">
-                    {s.tag}
-                  </span>
-                ) : null}
-              </div>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-mute">
-                {s.copy}
-              </p>
-              <a
-                href={YOCALE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition-colors hover:text-gold-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded"
-              >
-                Book this treatment
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 20 20"
-                  className="h-3.5 w-3.5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M7 7h10v10M7 17 17 7" />
-                </svg>
-              </a>
-            </article>
+            <ServiceRow key={s.name} s={s} />
           ))}
-          <article className="card flex flex-col justify-center border-dashed bg-transparent !p-7">
-            <p className="text-sm font-semibold text-gold">Not sure where to start?</p>
-            <p className="mt-2 text-sm leading-relaxed text-mute">
-              Tell the concierge your skin concern — it'll point you to the
-              right treatment in seconds.
-            </p>
-            <button
-              type="button"
-              onClick={() => document.getElementById("chat-launcher")?.click()}
-              className="mt-5 text-left text-sm font-semibold text-gold underline-offset-4 hover:underline"
-            >
-              Ask the concierge
-            </button>
-          </article>
+        </div>
+        <div className="mt-8 card flex flex-col items-start justify-center border-dashed bg-transparent !p-7">
+          <p className="text-sm font-semibold text-gold">Not sure where to start?</p>
+          <p className="mt-2 text-sm leading-relaxed text-mute">
+            Tell the concierge your skin concern — it'll point you to the
+            right treatment in seconds.
+          </p>
+          <button
+            type="button"
+            onClick={() => document.getElementById("chat-launcher")?.click()}
+            className="mt-5 text-left text-sm font-semibold text-gold underline-offset-4 hover:underline"
+          >
+            Ask the concierge
+          </button>
         </div>
       </div>
     </section>
