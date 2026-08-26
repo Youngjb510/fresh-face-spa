@@ -361,7 +361,6 @@ function Home() {
         <main>
           <Hero />
           <About />
-          <VideoIntro />
           <Services />
           <Gallery />
           <Hours />
@@ -402,6 +401,59 @@ function Header() {
 }
 
 /* ----------------------------------- Hero ---------------------------------- */
+
+function HeroVideo() {
+  const [muted, setMuted] = useState(true);
+  const ref = useRef<HTMLVideoElement>(null);
+
+  const unmute = () => {
+    setMuted(false);
+    ref.current?.play();
+  };
+
+  return (
+    <div className="relative">
+      <video
+        ref={ref}
+        className="relative aspect-[9/16] w-full rounded-t-[10rem] rounded-b-[2.5rem] object-cover object-bottom shadow-xl"
+        src={g("/video/promo.mp4")}
+        poster={g("/video/promo-poster.jpg")}
+        autoPlay
+        muted={muted}
+        loop
+        playsInline
+        preload="auto"
+      />
+      {muted && (
+        <button
+          type="button"
+          onClick={unmute}
+          aria-label="Play with sound"
+          className="absolute bottom-6 right-6 flex items-center gap-2 rounded-full bg-black/60 px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-sm transition-colors hover:bg-black/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3Z" />
+            <path
+              d="M16 8.5a4.5 4.5 0 0 1 0 7"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
+            <path
+              d="M18.5 6a8 8 0 0 1 0 12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
+          </svg>
+          Tap for sound
+        </button>
+      )}
+    </div>
+  );
+}
 
 function Hero() {
   return (
@@ -447,18 +499,7 @@ function Hero() {
             aria-hidden="true"
             className="absolute -inset-3 rotate-[-2deg] rounded-t-[10rem] rounded-b-[2.5rem] bg-sand"
           />
-          <ClickablePhoto
-            index={0}
-            label={`Open photo 1 of ${PG_PHOTOS.length} full size`}
-            className="relative block w-full cursor-pointer rounded-t-[10rem] rounded-b-[2.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-clay-deep focus-visible:ring-offset-2"
-          >
-            <img
-              src={IMAGES.hero}
-              alt="The calm, softly lit treatment room at Fresh Face Spa"
-              fetchPriority="high"
-              className="relative aspect-[4/5] w-full rounded-t-[10rem] rounded-b-[2.5rem] object-cover shadow-xl"
-            />
-          </ClickablePhoto>
+          <HeroVideo />
           <p className="absolute -bottom-4 left-1/2 w-max -translate-x-1/2 rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-sage-deep shadow-sm ring-1 ring-line">
             Est. Mission Valley, San Diego
           </p>
@@ -591,36 +632,6 @@ function About() {
 }
 
 /* --------------------------------- Services -------------------------------- */
-
-function VideoIntro() {
-  return (
-    <section id="watch" className="bg-ivory py-20 lg:py-28">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <div className="mx-auto max-w-sm text-center">
-          <p className="eyebrow">Take a look inside</p>
-          <h2 className="mt-4 font-display text-4xl font-medium leading-tight tracking-tight text-gold-display sm:text-5xl">
-            See the <span className="italic text-gold-display">studio</span>
-          </h2>
-          <p className="mt-5 leading-relaxed text-mute">
-            A quick look at the space, the care, and what a visit with Raquel feels like.
-          </p>
-          <div className="mt-10 overflow-hidden rounded-3xl border border-line bg-linen shadow-sm">
-            <video
-              className="block aspect-9/16 w-full object-cover"
-              src={g("/video/promo.mp4")}
-              poster={g("/video/promo-poster.jpg")}
-              controls
-              playsInline
-              preload="metadata"
-            >
-              Your browser doesn't support embedded video.
-            </video>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function Services() {
   return (
