@@ -458,6 +458,7 @@ function Home() {
           <About />
           <Services />
           <Gallery />
+          <Process />
           <Hours />
           <Contact />
         </main>
@@ -940,6 +941,106 @@ function Gallery() {
               />
             </button>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------------------------- Process -------------------------------- */
+
+// Loaded and played only once scrolled near, paused the moment it scrolls
+// away — nobody on a phone plan should pay for two videos they never looked
+// at. Respects prefers-reduced-motion by falling back to native controls
+// instead of autoplaying, same courtesy as the rest of the page.
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function ProcessVideo({
+  src,
+  poster,
+  caption,
+}: {
+  src: string;
+  poster: string;
+  caption: string;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    if (prefersReducedMotion()) {
+      setReduced(true);
+      el.src = src;
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!el.src) el.src = src;
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [src]);
+
+  return (
+    <div className="relative aspect-[9/16] overflow-hidden rounded-3xl bg-ink ring-1 ring-line/60">
+      <video
+        ref={ref}
+        muted
+        loop={!reduced}
+        controls={reduced}
+        playsInline
+        preload="none"
+        poster={poster}
+        className="block h-full w-full object-cover"
+      />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent px-5 pb-4 pt-10 text-sm text-white">
+        {caption}
+      </div>
+    </div>
+  );
+}
+
+function Process() {
+  return (
+    <section id="process" aria-label="A treatment in motion" className="bg-linen/60 py-20 lg:py-28">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p className="eyebrow">The process</p>
+            <h2 className="mt-4 font-display text-4xl font-medium leading-tight tracking-tight text-gold-display sm:text-5xl">
+              See a treatment <span className="italic text-gold-display">in motion</span>
+            </h2>
+          </div>
+          <p className="max-w-sm text-sm leading-relaxed text-mute">
+            A short look at the pace of a visit here &mdash; warm towels, unhurried
+            hands, and the fascia facial massage that&rsquo;s become the studio&rsquo;s
+            signature.
+          </p>
+        </div>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          <ProcessVideo
+            src={g("/video/process-1.mp4")}
+            poster={g("/video/process-1-poster.jpg")}
+            caption="Warm prep, before every treatment"
+          />
+          <ProcessVideo
+            src={g("/video/process-2.mp4")}
+            poster={g("/video/process-2-poster.jpg")}
+            caption="Fascia facial massage, the studio signature"
+          />
         </div>
       </div>
     </section>
