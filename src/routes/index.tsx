@@ -25,6 +25,8 @@ const IMAGES = {
 // Locally-hosted, optimized studio photos (copied from the uploaded JPGs into
 // public/gallery and served by the site at /gallery/*).
 const GALLERY_IMG_NAMES = [
+  "pool-1",
+  "pool-2",
   "16-P1029029",
   "18-P1029035",
   "21-P1029043",
@@ -52,12 +54,12 @@ const PG_PHOTOS = [
   IMAGES.hero, // 0  hero
   ...ABOUT_IMGS, // 1-3 about
   SERVICES_IMG, // 4  services
-  ...GALLERY_IMAGES, // 5-8 gallery
-  ...CONTACT_IMGS, // 9-10 contact
+  ...GALLERY_IMAGES, // gallery
+  ...CONTACT_IMGS, // contact
 ];
 const ABOUT_START = 1;
 const GALLERY_START = 5;
-const CONTACT_START = 9;
+const CONTACT_START = GALLERY_START + GALLERY_IMAGES.length;
 
 const NAV_LINKS = [
   { href: "#about", label: "About" },
@@ -922,7 +924,7 @@ function Gallery() {
             </button>
           ))}
         </div>
-        <div className="mt-12 hidden gap-5 sm:columns-3 lg:columns-4 sm:[column-fill:balance] sm:block">
+        <div className="mt-12 hidden gap-5 sm:columns-3 sm:[column-fill:balance] sm:block">
           {GALLERY_IMAGES.map((src, i) => (
             <button
               key={src}
@@ -1030,7 +1032,7 @@ function Process() {
             signature.
           </p>
         </div>
-        <div className="mt-12 grid gap-5 sm:grid-cols-2">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <ProcessVideo
             src={g("/video/process-1.mp4")}
             poster={g("/video/process-1-poster.jpg")}
@@ -1040,6 +1042,11 @@ function Process() {
             src={g("/video/process-2.mp4")}
             poster={g("/video/process-2-poster.jpg")}
             caption="Fascia facial massage, the studio signature"
+          />
+          <ProcessVideo
+            src={g("/video/process-3.mp4")}
+            poster={g("/video/process-3-poster.jpg")}
+            caption="Poolside, outside the studio"
           />
         </div>
       </div>
