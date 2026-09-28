@@ -186,16 +186,6 @@ const SERVICES: MenuService[] = [
     included: ["Double cleanse", "Exfoliation", "Extraction (if needed)", "Back massage", "Mask"],
     addOns: ["Microdermabrasion — $25"],
   },
-  {
-    name: "First Client Special",
-    price: "$99",
-    duration: null,
-    copy: "Your first visit with us — a consultation-led facial that gets your esthetician up to speed on your skin, goals, and history.",
-    idealFor: "First visit only.",
-    included: ["Consultation", "Double cleanse", "Exfoliation", "Mask", "Facial massage (hand & shoulder)", "LED light", "Serum, moisturizer, SPF"],
-    addOns: ["Dermaplaning — $25"],
-    tag: "First visit",
-  },
 ];
 
 const DAYS = [
@@ -208,7 +198,7 @@ const DAYS = [
   "Sunday",
 ];
 
-type ConcernId = "acne" | "pigmentation" | "sensitivity" | "aging" | "first";
+type ConcernId = "acne" | "pigmentation" | "sensitivity" | "aging";
 
 const CONCERNS: {
   id: ConcernId;
@@ -239,12 +229,6 @@ const CONCERNS: {
     label: "Aging & fine lines",
     service: "Firming Peptide Facial",
     copy: "Age-management facials pair firming actives and lymphatic technique with our signature fascia facial massage to support elasticity, tone, and a rested, lifted look.",
-  },
-  {
-    id: "first",
-    label: "First-time client",
-    service: "First Client Special",
-    copy: "Book a New Client Special: we start with a consultation and a fully customized facial, then build a plan around your skin's goals — with take-home guidance after every visit.",
   },
 ];
 
