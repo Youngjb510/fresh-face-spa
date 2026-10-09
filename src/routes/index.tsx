@@ -10,7 +10,8 @@ import {
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 
-const YOCALE_URL = "https://www.yocale.com/widget/fresh-face-spa";
+const BOOKING_URL =
+  "https://clients.mindbodyonline.com/classic/ws?studioid=5757093&stype=-9";
 
 // Base path for asset URLs. Vite's `base` (import.meta.env.BASE_URL) is "/" for
 // the SSR/live site, and "/fresh-face-spa/" for the GitHub Pages static build.
@@ -474,7 +475,7 @@ function Header() {
             </a>
           ))}
         </nav>
-        <a href={YOCALE_URL} target="_blank" rel="noopener noreferrer" className="btn-primary !px-5 !py-2.5">
+        <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-primary !px-5 !py-2.5">
           Book Now
         </a>
       </div>
@@ -565,7 +566,7 @@ function Hero() {
             age management — your skin, thoughtfully cared for.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
-            <a href={YOCALE_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">
               Book Now
             </a>
             <a href="#services" className="btn-ghost">
@@ -790,7 +791,7 @@ function ServiceRow({ s }: { s: MenuService }) {
             </div>
           ) : null}
           <a
-            href={YOCALE_URL}
+            href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition-colors hover:text-gold-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 rounded"
@@ -1054,7 +1055,7 @@ function Hours() {
               Fresh Face Spa is open all seven days, 10am to 7pm. Appointments
               are recommended — booking online takes less than a minute.
             </p>
-            <a href={YOCALE_URL} target="_blank" rel="noopener noreferrer" className="btn-primary mt-8">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn-primary mt-8">
               Book an appointment
             </a>
           </div>
@@ -1208,12 +1209,12 @@ function Contact() {
               </div>
             </address>
             <a
-              href={YOCALE_URL}
+              href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-9 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-gold-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-sage-deep"
             >
-              Book on Yocale
+              Book an appointment
             </a>
           </div>
 
@@ -1263,8 +1264,7 @@ function Contact() {
               </li>
             </ul>
               <p className="mt-7 border-t border-ivory/15 pt-5 text-xs leading-relaxed text-ivory/60">
-                Booking is handled through Yocale — the only place to reserve your
-                appointment.
+                Booking is handled online — reservations open in a new window.
               </p>
             </div>
             <div className="mt-6 grid grid-cols-2 gap-3">
@@ -1323,7 +1323,7 @@ function Footer() {
             </a>
           ))}
           <a
-            href={YOCALE_URL}
+            href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link font-semibold text-gold"
@@ -1477,12 +1477,12 @@ function ChatWidget() {
                     {recommendation.copy}
                   </p>
                   <a
-                    href={YOCALE_URL}
+                    href={BOOKING_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-gold-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
                   >
-                    Book this on Yocale
+                    Book this treatment
                   </a>
                 </div>
                 <div className="pt-1">
@@ -1499,7 +1499,7 @@ function ChatWidget() {
           </div>
 
           <p className="border-t border-line bg-white px-4 py-2.5 text-center text-[0.68rem] text-faint">
-            Booking happens on Yocale · no account needed
+            Booking is quick and easy · no account needed
           </p>
         </div>
       ) : null}
