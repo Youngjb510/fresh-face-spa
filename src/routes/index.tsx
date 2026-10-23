@@ -152,6 +152,15 @@ const SERVICES: MenuService[] = [
     addOns: ["Dermaplaning — $25"],
   },
   {
+    name: "Oxygen Glow Facial",
+    price: "$150",
+    duration: "60 min",
+    copy: "A rejuvenating facial utilizing pure oxygen delivery and OxygenCeuticals formulated ampoules to deeply hydrate, refresh skin tone, and restore a clear, natural glow.",
+    idealFor: null,
+    included: ["Double cleanse", "Light exfoliation", "Customized oxygen infusion misting", "Signature facial & shoulder massage", "Protective barrier hydration"],
+    addOns: [],
+  },
+  {
     name: "Firming Peptide Facial",
     price: "$135",
     duration: "70 min",
