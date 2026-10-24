@@ -11,7 +11,7 @@ import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 const BOOKING_URL =
-  "https://clients.mindbodyonline.com/classic/ws?studioid=5757093&stype=-9";
+  "https://www.yocale.com/widget/fresh-face-spa?locations=170951";
 
 // Base path for asset URLs. Vite's `base` (import.meta.env.BASE_URL) is "/" for
 // the SSR/live site, and "/fresh-face-spa/" for the GitHub Pages static build.

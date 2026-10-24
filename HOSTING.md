@@ -51,7 +51,8 @@ npm run start
 - No database or secret keys are required — the site is fully static content
   plus a client-side chat widget.
 - The only external link is the **Yocale booking widget**:
-  `https://www.yocale.com/widget/fresh-face-spa` (defined as `YOCALE_URL` at the
-  top of `src/routes/index.tsx`). Update it if your Yocale account changes.
+  `https://www.yocale.com/widget/fresh-face-spa?locations=170951` (defined as
+  `BOOKING_URL` at the top of `src/routes/index.tsx`). Update it if your Yocale
+  account changes.
 - Social/contact details (addresses, phone, Instagram link) live in
   `src/routes/index.tsx` — edit there and rebuild.
