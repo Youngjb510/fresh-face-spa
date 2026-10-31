@@ -1,0 +1,38 @@
+name: PR build check
+
+# Builds every pull request the same way the live deploy does, without
+# publishing anything, so a change that would break the site is caught
+# before it can be merged.
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build static site (same as the deploy)
+        shell: bash
+        run: bash ./scripts/build-gh-pages.sh 2>&1 | tee build.log
+
+      - name: Verify the build is deployable
+        run: bash ./scripts/verify-build.sh build.log dist/client
