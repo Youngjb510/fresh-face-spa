@@ -153,7 +153,7 @@ const SERVICES: MenuService[] = [
   },
   {
     name: "Oxygen Glow Facial",
-    price: "$150",
+    price: "$200",
     duration: "60 min",
     copy: "A rejuvenating facial utilizing pure oxygen delivery and OxygenCeuticals formulated ampoules to deeply hydrate, refresh skin tone, and restore a clear, natural glow.",
     idealFor: null,
@@ -170,21 +170,21 @@ const SERVICES: MenuService[] = [
     addOns: ["Dermaplaning — $20"],
   },
   {
-    name: "Acne Facial (Face Reality)",
-    price: "$125",
-    duration: "90 min",
-    copy: "A target driven, clinical treatment designed specifically for acne-prone skin. This facial features deep cleanse, mild exfoliating peel and extraction to clear congested pores.",
-    idealFor: null,
-    included: ["Double Cleanse", "Exfoliation (enzyme mask)", "Extractions/steam", "High frequency", "Mask", "LED Blue light", "Serum, moisturizer, SPF"],
-    addOns: [],
-  },
-  {
     name: "Teen Clarifying Facial",
     price: "$90",
     duration: null,
     copy: "Designed specifically for adolescent skin, this gentle yet effective facial addresses the unique skin changes caused by hormonal shifts, excess oil production and early breakouts.",
     idealFor: null,
     included: ["Double Cleanse", "Exfoliation", "Light extraction (if needed) / steam", "Mask", "Serum, moisturizer, SPF"],
+    addOns: [],
+  },
+  {
+    name: "The Gentleman's Facial",
+    price: "$125",
+    duration: null,
+    copy: "Tailored specifically to the distinct needs of men's skin, this treatment addresses daily shaving stress, congestion, and environmental fatigue. Key focus: calming, hydrating, deep pore cleansing.",
+    idealFor: null,
+    included: ["Deep pore cleansing", "Gentle exfoliation to prevent ingrown hairs", "Clinical botanical hydration to calm razor burn", "Signature 10-minute face, neck & shoulder massage"],
     addOns: [],
   },
   {
@@ -219,8 +219,8 @@ const CONCERNS: {
   {
     id: "acne",
     label: "Acne & breakouts",
-    service: "Acne Facial (Face Reality)",
-    copy: "Deep-clearing, congestion-focused work that calms active breakouts and gently exfoliates pores — finished with a soothing step so skin never feels stripped. Your esthetician tailors every pass to your skin's tolerance.",
+    service: "Customized Facial",
+    copy: "A personalized facial built around your skin. Your esthetician tailors the deep cleanse, gentle exfoliation and extractions to calm active breakouts and clear congested pores, finishing with a soothing step so skin never feels stripped.",
   },
   {
     id: "pigmentation",
