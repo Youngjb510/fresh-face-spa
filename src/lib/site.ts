@@ -92,7 +92,7 @@ export const TREATMENTS: TreatmentLink[] = [
     fullName: "The Gentleman's Facial",
     blurb:
       "Tailored to men's skin — deep pore cleansing and calming hydration for shaving stress, congestion and environmental fatigue.",
-    priceLine: "$125",
+    priceLine: "$125 · 70 min",
     image: g("/gallery/16-P1029029.jpg"),
   },
   {

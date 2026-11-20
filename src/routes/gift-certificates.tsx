@@ -4,16 +4,30 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteShell } from "~/components/chrome";
 import { StudioNote } from "~/components/treatment-page";
 import { pageHead } from "~/lib/seo";
-import { PHONE_DISPLAY, PHONE_HREF, TREATMENTS, g } from "~/lib/site";
+import {
+  BOOKING_URL,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  TREATMENTS,
+  g,
+} from "~/lib/site";
 
 const GIFT_IMAGE = g("/gallery/34-P1029066.jpg");
+
+const AMOUNTS = ["$50", "$75", "$100", "$150", "$200"];
+
+const CTA_CLASS =
+  "inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-gold-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2";
+
+const PHONE_CLASS =
+  "inline-flex items-center justify-center rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-gold ring-1 ring-line transition-colors hover:bg-sand/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2";
 
 export const Route = createFileRoute("/gift-certificates")({
   head: () =>
     pageHead({
       title: "Gift Certificates | Fresh Face Spa, Mission Valley San Diego",
       description:
-        "Fresh Face Spa gift certificates for any service or any amount — digital or printed. Buy by calling or texting (619) 755-9045, or in the studio in Mission Valley, San Diego.",
+        "Fresh Face Spa gift certificates in $50, $75, $100, $150 and $200 amounts. Buy online through the booking menu, in person at the Mission Valley or Chula Vista studio, or by calling (619) 755-9045. They never expire.",
       path: "/gift-certificates",
       image: GIFT_IMAGE,
       imageAlt: "Fresh Face Spa studio detail",
@@ -36,20 +50,23 @@ function GiftCertificatesPage() {
               Give an hour of <span className="italic text-gold-display">quiet</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
-              A Fresh Face Spa gift certificate covers any treatment on the menu
-              or any amount you choose — digital or printed, ready for a birthday,
-              a thank you, or someone who has earned a slow hour.
+              Fresh Face Spa gift certificates come in $50, $75, $100, $150 and
+              $200 amounts and can go toward any treatment on the menu — a
+              birthday, a thank you, or someone who has earned a slow hour. They
+              never expire.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <a
-                href={PHONE_HREF}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-gold-display focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={CTA_CLASS}
               >
+                Buy online
+              </a>
+              <a href={PHONE_HREF} className={PHONE_CLASS}>
                 Call or text {PHONE_DISPLAY}
               </a>
-              <Link to="/" hash="contact" className="btn-ghost">
-                Studio address
-              </Link>
             </div>
             <p className="mt-6 text-sm text-faint">
               Open every day, 10am – 7pm · Mission Valley + Chula Vista
@@ -72,83 +89,101 @@ function GiftCertificatesPage() {
 
       <section className="bg-linen/60 py-16 lg:py-24">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
-          <p className="eyebrow">How it works</p>
+          <p className="eyebrow">Amounts</p>
           <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-gold-display sm:text-4xl">
-            Three simple steps
+            Choose an amount
           </h2>
-          <ol className="mt-8 grid gap-5 sm:grid-cols-3">
-            <li className="card">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
-                Step 1
-              </p>
-              <p className="mt-2 font-display text-xl font-medium text-gold">
-                Choose any amount or any service
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-mute">
-                Put a dollar amount on the certificate and let them pick, or name
-                the treatment you'd like to give — from a Customized Facial to the
-                Oxygen Glow Facial.
-              </p>
-            </li>
-            <li className="card">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
-                Step 2
-              </p>
-              <p className="mt-2 font-display text-xl font-medium text-gold">
-                Digital or printed
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-mute">
-                Take it as a digital certificate to send the same day, or ask for
-                a printed one to hand over in person.
-              </p>
-            </li>
-            <li className="card">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
-                Step 3
-              </p>
-              <p className="mt-2 font-display text-xl font-medium text-gold">
-                They book whenever suits
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-mute">
-                When they book — online or by phone — they mention the
-                certificate and we apply it to the visit.
-              </p>
-            </li>
-          </ol>
+          <p className="mt-4 max-w-2xl leading-relaxed text-mute">
+            Certificates are issued in five amounts. Pick the one that matches the
+            treatment you have in mind, or the budget you have in mind.
+          </p>
+          <ul className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+            {AMOUNTS.map((amount) => (
+              <li key={amount} className="card text-center">
+                <p className="font-display text-3xl font-medium text-gold">{amount}</p>
+                <p className="mt-2 text-xs uppercase tracking-[0.14em] text-sage-deep">
+                  Gift certificate
+                </p>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-sm leading-relaxed text-faint">
+            Every certificate can be applied to any treatment on the menu, and it
+            never expires — so it's still good whenever they're ready to use it.
+          </p>
         </div>
       </section>
 
       <section className="bg-ivory py-16 lg:py-24">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <p className="eyebrow">How to buy</p>
+          <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-gold-display sm:text-4xl">
+            Three ways to buy one
+          </h2>
+          <ul className="mt-8 grid gap-5 lg:grid-cols-3">
+            <li className="card flex h-full flex-col">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
+                Online
+              </p>
+              <p className="mt-2 font-display text-xl font-medium text-gold">
+                Through the booking menu
+              </p>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-mute">
+                Open the studio's online booking menu, choose the gift certificate
+                amount you want, and pay for it there. Same menu you book a facial
+                in.
+              </p>
+              <a
+                href={BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${CTA_CLASS} mt-5 self-start !px-6 !py-3 text-sm`}
+              >
+                Buy online
+              </a>
+            </li>
+            <li className="card flex h-full flex-col">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
+                In person
+              </p>
+              <p className="mt-2 font-display text-xl font-medium text-gold">
+                At either studio
+              </p>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-mute">
+                Stop by Mission Valley — 1640 Camino Del Rio N, Ste 206, Rm 116,
+                San Diego, CA 92108 — or Chula Vista, at Sola Salon Studios, 940
+                Eastlake Parkway, Suite 16. Open every day, 10am – 7pm.
+              </p>
+              <Link
+                to="/"
+                hash="contact"
+                className="mt-5 self-start text-sm font-semibold text-sage-deep underline-offset-4 hover:underline"
+              >
+                Studio addresses &amp; hours
+              </Link>
+            </li>
+            <li className="card flex h-full flex-col">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
+                By phone
+              </p>
+              <p className="mt-2 font-display text-xl font-medium text-gold">
+                Call or text {PHONE_DISPLAY}
+              </p>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-mute">
+                Tell us the amount and who it's for, and we'll take it from there —
+                including getting it to someone who isn't local.
+              </p>
+              <a href={PHONE_HREF} className={`${PHONE_CLASS} mt-5 self-start !px-6 !py-3`}>
+                Call or text
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section className="bg-linen/60 py-16 lg:py-24">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <p className="eyebrow">How to buy</p>
-              <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-gold-display sm:text-4xl">
-                Call, text, or stop by
-              </h2>
-              <div className="mt-6 space-y-4 leading-relaxed text-mute">
-                <p>
-                  Call or text{" "}
-                  <a
-                    href={PHONE_HREF}
-                    className="font-semibold text-gold underline-offset-4 hover:underline"
-                  >
-                    {PHONE_DISPLAY}
-                  </a>{" "}
-                  and we'll set the certificate up for you — tell us the amount or
-                  the treatment, and who it's for.
-                </p>
-                <p>
-                  You're also welcome to buy one in person at the studio: 1640
-                  Camino Del Rio N, Ste 206, Rm 116, San Diego, CA 92108. The
-                  Chula Vista location (Sola Salon Studios, 940 Eastlake Parkway,
-                  Suite 16) is open Sundays and Mondays.
-                </p>
-                {/* OWNER-EDITABLE: once denominations and an online purchase link
-                    are confirmed, add them here. No expiry wording is published
-                    until the studio confirms the policy. */}
-              </div>
-            </div>
             <div>
               <p className="eyebrow">How to redeem</p>
               <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-gold-display sm:text-4xl">
@@ -156,20 +191,32 @@ function GiftCertificatesPage() {
               </h2>
               <div className="mt-6 space-y-4 leading-relaxed text-mute">
                 <p>
-                  Mention the certificate when you book — online in the booking
-                  notes, or by phone — and again when you arrive, so we can apply
-                  it to the right visit.
+                  Mention the certificate when you book — in the booking notes, or
+                  by phone — and again when you arrive, so we can apply it to the
+                  right visit.
                 </p>
                 <p>
-                  Certificates can be applied to any service on the menu, and
-                  toward retail products in the studio.
+                  Certificates can be applied to any treatment on the menu, and
+                  toward retail products in the studio. There is no expiration
+                  date: a certificate is still valid whenever it's used.
+                </p>
+              </div>
+            </div>
+            <div>
+              <p className="eyebrow">Good to know</p>
+              <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-gold-display sm:text-4xl">
+                Questions before you buy?
+              </h2>
+              <div className="mt-6 space-y-4 leading-relaxed text-mute">
+                <p>
+                  Not sure which amount fits the treatment you want to give? Ask
+                  us and we'll point you at the right one.
                 </p>
               </div>
               <div className="mt-6">
-                <StudioNote title="Questions before you buy?">
-                  Text {PHONE_DISPLAY} and we'll answer directly — including the
-                  current policy on certificate expiry and any balance remaining
-                  after a visit.
+                <StudioNote title="No expiration">
+                  Text {PHONE_DISPLAY} with any question about a certificate — the
+                  amount to choose, how it's delivered, or how to use it.
                 </StudioNote>
               </div>
             </div>
@@ -177,7 +224,7 @@ function GiftCertificatesPage() {
         </div>
       </section>
 
-      <section className="bg-linen/60 py-16 lg:py-24">
+      <section className="bg-ivory py-16 lg:py-24">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <p className="eyebrow">Good to pair with</p>
           <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-gold-display sm:text-4xl">

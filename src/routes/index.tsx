@@ -176,7 +176,7 @@ const SERVICES: MenuService[] = [
   {
     name: "The Gentleman's Facial",
     price: "$125",
-    duration: null,
+    duration: "70 min",
     copy: "Tailored specifically to the distinct needs of men's skin, this treatment addresses daily shaving stress, congestion, and environmental fatigue. Key focus: calming, hydrating, deep pore cleansing.",
     idealFor: null,
     page: "/male-facial",

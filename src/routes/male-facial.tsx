@@ -11,9 +11,9 @@ export const Route = createFileRoute("/male-facial")({
   head: () =>
     pageHead({
       title:
-        "The Gentleman's Facial — $125 | Fresh Face Spa, Mission Valley San Diego",
+        "The Gentleman's Facial — $125, 70 min | Fresh Face Spa, Mission Valley San Diego",
       description:
-        "The Gentleman's Facial at Fresh Face Spa in Mission Valley, San Diego ($125) — deep pore cleansing, gentle exfoliation and calming botanical hydration for shaving stress, congestion and environmental fatigue.",
+        "The Gentleman's Facial at Fresh Face Spa in Mission Valley, San Diego — 70 minutes, $125. Deep pore cleansing, gentle exfoliation and calming botanical hydration for shaving stress, congestion and environmental fatigue.",
       path: "/male-facial",
       image: T.image,
       imageAlt: "Fresh Face Spa studio detail",
