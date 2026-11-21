@@ -136,7 +136,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Experience the ultimate deep cleanse and instant glow with our advanced hydro-dermabrasion treatment.",
     priceLine: "$175 · 70 min",
-    image: g("/gallery/29-P1029055.jpg"),
+    image: g("/gallery/27-P1029053.jpg"),
   },
   {
     path: "/firming-peptide-facial",
@@ -145,7 +145,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Renew, rebuild and lift aging or sluggish skin with this advanced anti-aging treatment.",
     priceLine: "$135 · 70 min",
-    image: g("/gallery/19-P1029040.jpg"),
+    image: g("/gallery/4-P1029005.jpg"),
   },
   {
     path: "/dermaplaning-facial",
@@ -172,7 +172,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Refresh and polish your skin with this advanced physical exfoliation treatment.",
     priceLine: "$135 · 60 min",
-    image: g("/gallery/23-P1029045.jpg"),
+    image: g("/gallery/9-P1029012.jpg"),
   },
   {
     path: "/liquid-microneedling",
@@ -190,7 +190,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Maximum skin transformation with zero downtime — a 35% TCA biphasic peel that works within deeper layers of the skin.",
     priceLine: "$225 · length in booking menu",
-    image: g("/gallery/28-P1029054.jpg"),
+    image: g("/gallery/29-P1029055.jpg"),
   },
   {
     path: "/back-facial",
