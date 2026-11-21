@@ -9,6 +9,7 @@ import {
   SiteHeader,
   TikTokIcon,
 } from "~/components/chrome";
+import { GoogleProof } from "~/components/google-proof";
 import {
   ClickablePhoto,
   PhotosLightboxProvider,
@@ -166,7 +167,7 @@ const SERVICES: MenuService[] = [
   {
     name: "Teen Clarifying Facial",
     price: "$90",
-    duration: null,
+    duration: "60 min",
     copy: "Designed specifically for adolescent skin, this gentle yet effective facial addresses the unique skin changes caused by hormonal shifts, excess oil production and early breakouts.",
     idealFor: null,
     page: "/teen-facial",
@@ -326,6 +327,7 @@ function Hero() {
           <p className="mt-7 text-sm text-faint">
             Open every day, 10am – 7pm · by appointment
           </p>
+          <GoogleProof className="mt-3" />
         </div>
         <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
           <div

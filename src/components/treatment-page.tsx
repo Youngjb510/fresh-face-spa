@@ -10,6 +10,7 @@ import {
   g,
 } from "~/lib/site";
 import type { TreatmentPath } from "~/lib/site";
+import { GoogleProof } from "~/components/google-proof";
 
 /* ------------------------------ Treatment hero ------------------------------ */
 
@@ -74,6 +75,7 @@ export function TreatmentHero({
           <p className="mt-6 text-sm text-faint">
             Open every day, 10am – 7pm · by appointment
           </p>
+          <GoogleProof className="mt-3" />
         </div>
 
         <div className="relative mx-auto w-full max-w-md">

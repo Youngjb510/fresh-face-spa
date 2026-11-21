@@ -12,6 +12,13 @@ export const SITE_URL = "https://freshfacespasd.com";
 export const PHONE_DISPLAY = "(619) 755-9045";
 export const PHONE_HREF = "tel:+16197559045";
 
+// Social proof. The count is the studio's own figure; the link goes to the
+// Google Business Profile for the Mission Valley studio. No aggregateRating
+// markup is emitted for this — it's a plain, human-readable claim.
+export const GOOGLE_REVIEWS_LINE = "79 five-star Google reviews";
+export const GOOGLE_REVIEWS_URL =
+  "https://www.google.com/maps/place/Fresh+Face+Spa/data=!4m7!3m6!1s0x80d955b1233bf29d:0xf2f7c7f3340d5807!8m2!3d32.7689677!4d-117.1488894!16s%2Fg%2F11ms649xf9";
+
 // Base path for asset URLs. Vite's `base` (import.meta.env.BASE_URL) is "/" for
 // the SSR/live site, and "/fresh-face-spa/" for a GitHub Pages project-page
 // build. All gallery image references MUST go through `g()` so they resolve
@@ -83,7 +90,7 @@ export const TREATMENTS: TreatmentLink[] = [
     fullName: "Teen Clarifying Facial",
     blurb:
       "Gentle, clarifying care for adolescent skin dealing with hormonal shifts, excess oil and early breakouts.",
-    priceLine: "$90",
+    priceLine: "$90 · 60 min",
     image: g("/gallery/18-P1029035.jpg"),
   },
   {

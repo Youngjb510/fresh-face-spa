@@ -10,9 +10,10 @@ const T = TREATMENTS.find((t) => t.path === "/teen-facial")!;
 export const Route = createFileRoute("/teen-facial")({
   head: () =>
     pageHead({
-      title: "Teen Clarifying Facial — $90 | Fresh Face Spa, San Diego",
+      title:
+        "Teen Clarifying Facial — $90 · 60 min | Fresh Face Spa, San Diego",
       description:
-        "A gentle clarifying facial for teen skin in Mission Valley, San Diego. Double cleanse, exfoliation, light extractions and a calming mask to settle hormonal breakouts and excess oil — $90.",
+        "A gentle 60-minute clarifying facial for teen skin in Mission Valley, San Diego. Double cleanse, exfoliation, light extractions and a calming mask to settle hormonal breakouts and excess oil — $90.",
       path: "/teen-facial",
       image: T.image,
       imageAlt: "Fresh Face Spa studio detail",
@@ -31,7 +32,6 @@ function TeenFacialPage() {
         image={T.image}
         imageAlt="Fresh Face Spa studio detail"
         priceLine={T.priceLine}
-        priceNote="Treatment length is shown in the booking menu."
         intro={[
           "Teen skin is not just smaller adult skin. Hormones drive oil production up, pores get congested faster, and the barrier is often already irritated by the products teenagers reach for first. This facial is built around that reality — clarifying, but never punishing.",
           "A double cleanse is followed by gentle exfoliation, then light extraction only where it's actually needed, softened with steam. A calming mask, serum, moisturiser and SPF finish the visit so skin leaves comfortable rather than tight.",
