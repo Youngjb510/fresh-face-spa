@@ -11,7 +11,7 @@ import {
   g,
 } from "~/lib/site";
 
-const GIFT_IMAGE = g("/gallery/34-P1029066.jpg");
+const GIFT_IMAGE = g("/gallery/pool-1.jpg");
 
 const AMOUNTS = ["$50", "$75", "$100", "$150", "$200"];
 

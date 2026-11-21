@@ -71,7 +71,10 @@ export type TreatmentPath =
   | "/firming-peptide-facial"
   | "/dermaplaning-facial"
   | "/chemical-peel-facial"
-  | "/microdermabrasion";
+  | "/microdermabrasion"
+  | "/liquid-microneedling"
+  | "/bio-skin-peel"
+  | "/back-facial";
 
 export type TreatmentLink = {
   path: TreatmentPath;
@@ -97,7 +100,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Gentle, clarifying care for adolescent skin dealing with hormonal shifts, excess oil and early breakouts.",
     priceLine: "$90 · 60 min",
-    image: g("/gallery/18-P1029035.jpg"),
+    image: g("/gallery/39-P1029083.jpg"),
   },
   {
     path: "/male-facial",
@@ -106,7 +109,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Tailored to men's skin — deep pore cleansing and calming hydration for shaving stress, congestion and environmental fatigue.",
     priceLine: "$125 · 70 min",
-    image: g("/gallery/16-P1029029.jpg"),
+    image: g("/gallery/18-P1029035.jpg"),
   },
   {
     path: "/oxygen-glow-facial",
@@ -115,7 +118,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Oxygen-infused hydration and brightness for skin that looks tired, dull or freshly stressed.",
     priceLine: "$200 · 60 min",
-    image: g("/gallery/27-P1029053.jpg"),
+    image: g("/gallery/38-P1029082.jpg"),
   },
   {
     path: "/customized-facial",
@@ -142,7 +145,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Renew, rebuild and lift aging or sluggish skin with this advanced anti-aging treatment.",
     priceLine: "$135 · 70 min",
-    image: g("/gallery/31-P1029062.jpg"),
+    image: g("/gallery/19-P1029040.jpg"),
   },
   {
     path: "/dermaplaning-facial",
@@ -151,7 +154,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Reveal your smoothest, most radiant complexion with this high performance dual treatment.",
     priceLine: "$200 · 70 min",
-    image: g("/gallery/34-P1029066.jpg"),
+    image: g("/gallery/26-P1029048.jpg"),
   },
   {
     path: "/chemical-peel-facial",
@@ -160,7 +163,7 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Combine the ultimate relaxation with clinical grade resurfacing — a classic facial paired with an advanced chemical peel.",
     priceLine: "$175 · 70 min",
-    image: g("/gallery/38-P1029082.jpg"),
+    image: g("/gallery/20-P1029042.jpg"),
   },
   {
     path: "/microdermabrasion",
@@ -169,7 +172,34 @@ export const TREATMENTS: TreatmentLink[] = [
     blurb:
       "Refresh and polish your skin with this advanced physical exfoliation treatment.",
     priceLine: "$135 · 60 min",
-    image: g("/gallery/40-P1029087.jpg"),
+    image: g("/gallery/23-P1029045.jpg"),
+  },
+  {
+    path: "/liquid-microneedling",
+    name: "Liquid Microneedling",
+    fullName: "Liquid Microneedling (needle-free)",
+    blurb:
+      "Our Bio micro needling — 10 million spicules — for collagen production and skin rejuvenation.",
+    priceLine: "$175 · 70 min",
+    image: g("/gallery/24-P1029046.jpg"),
+  },
+  {
+    path: "/bio-skin-peel",
+    name: "Bio Skin Peel",
+    fullName: "No Peel, Peel — Bio Skin",
+    blurb:
+      "Maximum skin transformation with zero downtime — a 35% TCA biphasic peel that works within deeper layers of the skin.",
+    priceLine: "$225 · length in booking menu",
+    image: g("/gallery/28-P1029054.jpg"),
+  },
+  {
+    path: "/back-facial",
+    name: "Back Facial",
+    fullName: "Back Facial",
+    blurb:
+      "Treat a hard-to-reach area to the same deep-cleansing and skin-refining care as a classic facial.",
+    priceLine: "$80 · 60 min",
+    image: g("/gallery/pool-2.jpg"),
   },
 ];
 

@@ -15,6 +15,9 @@
 //   /dermaplaning-facial     -> dist/client/dermaplaning-facial/index.html
 //   /chemical-peel-facial    -> dist/client/chemical-peel-facial/index.html
 //   /microdermabrasion       -> dist/client/microdermabrasion/index.html
+//   /liquid-microneedling    -> dist/client/liquid-microneedling/index.html
+//   /bio-skin-peel           -> dist/client/bio-skin-peel/index.html
+//   /back-facial             -> dist/client/back-facial/index.html
 //   /gift-certificates       -> dist/client/gift-certificates/index.html
 //
 // GitHub Pages serves `<dir>/index.html` for `/dir/`, so each page is crawlable
@@ -40,6 +43,9 @@ const ROUTES = [
   "/dermaplaning-facial",
   "/chemical-peel-facial",
   "/microdermabrasion",
+  "/liquid-microneedling",
+  "/bio-skin-peel",
+  "/back-facial",
   "/gift-certificates",
 ];
 

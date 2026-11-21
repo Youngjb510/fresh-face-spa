@@ -164,7 +164,8 @@ export function IncludedCard({
 /* ------------------------------- Cross-links -------------------------------- */
 
 export function RelatedTreatments({ current }: { current: TreatmentPath }) {
-  const others = TREATMENTS.filter((t) => t.path !== current);
+  // Three cross-links keeps the grid to one tidy row.
+  const others = TREATMENTS.filter((t) => t.path !== current).slice(0, 3);
 
   return (
     <section className="bg-ivory py-16 lg:py-24">
