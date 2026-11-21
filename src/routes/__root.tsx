@@ -116,10 +116,7 @@ export const Route = createRootRoute({
       { name: "twitter:description", content: SHARE_DESCRIPTION },
       { name: "twitter:image", content: SHARE_IMAGE },
     ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "canonical", href: `${SITE_URL}/` },
-    ],
+    links: [{ rel: "stylesheet", href: appCss }],
     scripts: [
       {
         type: "application/ld+json",
