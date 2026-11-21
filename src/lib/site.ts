@@ -68,7 +68,10 @@ export type TreatmentPath =
   | "/oxygen-glow-facial"
   | "/customized-facial"
   | "/hydra-glow-facial"
-  | "/firming-peptide-facial";
+  | "/firming-peptide-facial"
+  | "/dermaplaning-facial"
+  | "/chemical-peel-facial"
+  | "/microdermabrasion";
 
 export type TreatmentLink = {
   path: TreatmentPath;
@@ -140,6 +143,33 @@ export const TREATMENTS: TreatmentLink[] = [
       "Renew, rebuild and lift aging or sluggish skin with this advanced anti-aging treatment.",
     priceLine: "$135 · 70 min",
     image: g("/gallery/31-P1029062.jpg"),
+  },
+  {
+    path: "/dermaplaning-facial",
+    name: "Dermaplaning Facial with Peel",
+    fullName: "Dermaplaning Facial with Peel",
+    blurb:
+      "Reveal your smoothest, most radiant complexion with this high performance dual treatment.",
+    priceLine: "$200 · 70 min",
+    image: g("/gallery/34-P1029066.jpg"),
+  },
+  {
+    path: "/chemical-peel-facial",
+    name: "Chemical Peel with Facial",
+    fullName: "Chemical Peel with Facial",
+    blurb:
+      "Combine the ultimate relaxation with clinical grade resurfacing — a classic facial paired with an advanced chemical peel.",
+    priceLine: "$175 · 70 min",
+    image: g("/gallery/38-P1029082.jpg"),
+  },
+  {
+    path: "/microdermabrasion",
+    name: "Microdermabrasion",
+    fullName: "Microdermabrasion",
+    blurb:
+      "Refresh and polish your skin with this advanced physical exfoliation treatment.",
+    priceLine: "$135 · 60 min",
+    image: g("/gallery/40-P1029087.jpg"),
   },
 ];
 
