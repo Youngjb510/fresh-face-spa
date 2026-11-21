@@ -65,7 +65,10 @@ export const CONCERNS: {
 export type TreatmentPath =
   | "/teen-facial"
   | "/male-facial"
-  | "/oxygen-glow-facial";
+  | "/oxygen-glow-facial"
+  | "/customized-facial"
+  | "/hydra-glow-facial"
+  | "/firming-peptide-facial";
 
 export type TreatmentLink = {
   path: TreatmentPath;
@@ -110,6 +113,33 @@ export const TREATMENTS: TreatmentLink[] = [
       "Oxygen-infused hydration and brightness for skin that looks tired, dull or freshly stressed.",
     priceLine: "$200 · 60 min",
     image: g("/gallery/27-P1029053.jpg"),
+  },
+  {
+    path: "/customized-facial",
+    name: "Customized Facial",
+    fullName: "Customized Facial",
+    blurb:
+      "Tailored specifically to your skin's unique needs. This fully personalized treatment delivers maximum results by addressing your specific concern.",
+    priceLine: "$125 · 60 min",
+    image: g("/gallery/21-P1029043.jpg"),
+  },
+  {
+    path: "/hydra-glow-facial",
+    name: "Hydra Glow Facial",
+    fullName: "Hydra Glow Facial",
+    blurb:
+      "Experience the ultimate deep cleanse and instant glow with our advanced hydro-dermabrasion treatment.",
+    priceLine: "$175 · 70 min",
+    image: g("/gallery/29-P1029055.jpg"),
+  },
+  {
+    path: "/firming-peptide-facial",
+    name: "Firming Peptide Facial",
+    fullName: "Firming Peptide Facial",
+    blurb:
+      "Renew, rebuild and lift aging or sluggish skin with this advanced anti-aging treatment.",
+    priceLine: "$135 · 70 min",
+    image: g("/gallery/31-P1029062.jpg"),
   },
 ];
 

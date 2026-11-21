@@ -632,7 +632,7 @@ function Services() {
 /* ------------------------------ Treatment guides ---------------------------- */
 
 // Links to the dedicated treatment pages (and gift certificates). Keeps the
-// three treatment pages one click from the home page.
+// treatment pages one click from the home page.
 function TreatmentGuides() {
   return (
     <section id="treatment-guides" aria-label="Treatment guides" className="bg-linen/60 py-20 lg:py-28">
@@ -641,7 +641,7 @@ function TreatmentGuides() {
           <div>
             <p className="eyebrow">Treatment guides</p>
             <h2 className="mt-4 font-display text-4xl font-medium leading-tight tracking-tight text-gold-display sm:text-5xl">
-              A closer look at <span className="italic text-gold-display">three facials</span>
+              A closer look at <span className="italic text-gold-display">our facials</span>
             </h2>
           </div>
           <p className="max-w-sm text-sm leading-relaxed text-mute">

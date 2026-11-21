@@ -269,7 +269,8 @@ export function TreatmentPage({
   priceLine: string | null;
   priceNote?: string;
   intro: string[];
-  idealFor: string;
+  /** Omitted where the studio has never stated who a treatment suits. */
+  idealFor?: string;
   included: string[];
   includedTitle?: string;
   children?: ReactNode;
@@ -298,10 +299,12 @@ export function TreatmentPage({
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
           <div>
             <Prose paragraphs={intro} />
-            <div className="mt-6 rounded-2xl bg-sage-soft/70 p-5">
-              <p className="text-sm font-semibold text-gold">Best for</p>
-              <p className="mt-1 text-sm leading-relaxed text-mute">{idealFor}</p>
-            </div>
+            {idealFor ? (
+              <div className="mt-6 rounded-2xl bg-sage-soft/70 p-5">
+                <p className="text-sm font-semibold text-gold">Best for</p>
+                <p className="mt-1 text-sm leading-relaxed text-mute">{idealFor}</p>
+              </div>
+            ) : null}
           </div>
           <IncludedCard items={included} title={includedTitle} />
         </div>

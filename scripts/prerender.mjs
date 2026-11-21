@@ -9,6 +9,9 @@
 //   /teen-facial             -> dist/client/teen-facial/index.html
 //   /male-facial             -> dist/client/male-facial/index.html
 //   /oxygen-glow-facial      -> dist/client/oxygen-glow-facial/index.html
+//   /customized-facial       -> dist/client/customized-facial/index.html
+//   /hydra-glow-facial       -> dist/client/hydra-glow-facial/index.html
+//   /firming-peptide-facial  -> dist/client/firming-peptide-facial/index.html
 //   /gift-certificates       -> dist/client/gift-certificates/index.html
 //
 // GitHub Pages serves `<dir>/index.html` for `/dir/`, so each page is crawlable
@@ -28,6 +31,9 @@ const ROUTES = [
   "/teen-facial",
   "/male-facial",
   "/oxygen-glow-facial",
+  "/customized-facial",
+  "/hydra-glow-facial",
+  "/firming-peptide-facial",
   "/gift-certificates",
 ];
 

@@ -5,7 +5,6 @@ import { SiteShell } from "~/components/chrome";
 import { StudioNote } from "~/components/treatment-page";
 import { pageHead } from "~/lib/seo";
 import {
-  BOOKING_URL,
   PHONE_DISPLAY,
   PHONE_HREF,
   TREATMENTS,
@@ -27,7 +26,7 @@ export const Route = createFileRoute("/gift-certificates")({
     pageHead({
       title: "Gift Certificates | Fresh Face Spa, Mission Valley San Diego",
       description:
-        "Fresh Face Spa gift certificates in $50, $75, $100, $150 and $200 amounts. Buy online through the booking menu, in person at the Mission Valley or Chula Vista studio, or by calling (619) 755-9045. They never expire.",
+        "Fresh Face Spa gift certificates in $50, $75, $100, $150 and $200 amounts. Call or text (619) 755-9045 to buy one, in person at the Mission Valley or Chula Vista studio, or by Yocale invoice. They never expire.",
       path: "/gift-certificates",
       image: GIFT_IMAGE,
       imageAlt: "Fresh Face Spa studio detail",
@@ -56,17 +55,16 @@ function GiftCertificatesPage() {
               never expire.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
-              <a
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={CTA_CLASS}
-              >
-                Buy online
-              </a>
-              <a href={PHONE_HREF} className={PHONE_CLASS}>
+              <a href={PHONE_HREF} className={CTA_CLASS}>
                 Call or text {PHONE_DISPLAY}
               </a>
+              <Link
+                to="/"
+                hash="contact"
+                className="btn-ghost"
+              >
+                Visit either studio
+              </Link>
             </div>
             <p className="mt-6 text-sm text-faint">
               Open every day, 10am – 7pm · Mission Valley + Chula Vista
@@ -123,23 +121,16 @@ function GiftCertificatesPage() {
           <ul className="mt-8 grid gap-5 lg:grid-cols-3">
             <li className="card flex h-full flex-col">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
-                Online
+                Call or text
               </p>
               <p className="mt-2 font-display text-xl font-medium text-gold">
-                Through the booking menu
+                Call or text {PHONE_DISPLAY}
               </p>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-mute">
-                Open the studio's online booking menu, choose the gift certificate
-                amount you want, and pay for it there. Same menu you book a facial
-                in.
+                Tell us the amount and who it's for, and we'll take it from there.
               </p>
-              <a
-                href={BOOKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${CTA_CLASS} mt-5 self-start !px-6 !py-3 text-sm`}
-              >
-                Buy online
+              <a href={PHONE_HREF} className={`${CTA_CLASS} mt-5 self-start !px-6 !py-3 text-sm`}>
+                Call or text {PHONE_DISPLAY}
               </a>
             </li>
             <li className="card flex h-full flex-col">
@@ -164,14 +155,14 @@ function GiftCertificatesPage() {
             </li>
             <li className="card flex h-full flex-col">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sage-deep">
-                By phone
+                By Yocale invoice
               </p>
               <p className="mt-2 font-display text-xl font-medium text-gold">
-                Call or text {PHONE_DISPLAY}
+                Pay an invoice online
               </p>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-mute">
-                Tell us the amount and who it's for, and we'll take it from there —
-                including getting it to someone who isn't local.
+                Ask us to send a Yocale invoice and pay it from home — handy when
+                the certificate is for someone who isn't local.
               </p>
               <a href={PHONE_HREF} className={`${PHONE_CLASS} mt-5 self-start !px-6 !py-3`}>
                 Call or text
